@@ -25,14 +25,17 @@ namespace tim03we\slashskin;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
+use tim03we\slashskin\cmd\SkinCommand;
 
 class Main extends PluginBase {
 
     public $skins;
 
+    public $prefix = "§a[§eSlash§bSkin§a]§6:";
+
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-        $this->getServer()->getCommandMap()->register("slashskin", new \tim03we\slashskin\cmd\SkinCommand($this));
+        $this->getServer()->getCommandMap()->register("皮肤", new SkinCommand($this));
         $this->saveResource("settings.yml");
         $this->cfg = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
         foreach ($this->cfg->get("skins") as $skins) {

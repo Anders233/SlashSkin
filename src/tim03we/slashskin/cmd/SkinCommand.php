@@ -27,13 +27,13 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
 use pocketmine\entity\Skin;
 use pocketmine\Player;
-use jojoe77777\FormAPI\SimpleForm;
+use tim03we\slashskin\libs\jojoe77777\FormAPI\SimpleForm;
 use tim03we\slashskin\Main;
 
 class SkinCommand extends Command {
 
     public function __construct(Main $plugin) {
-        parent::__construct("slashskin", "Choose your skin", "/slashskin", ["skin"]);
+        parent::__construct("皮肤", "更换你的皮肤", "/skin", ["skin"]);
         $this->setPermission("slashskin.use");
         $this->plugin = $plugin;
     }
@@ -45,7 +45,7 @@ class SkinCommand extends Command {
         if($sender instanceof Player) {
             $this->openList($sender);
         } else {
-            $sender->sendMessage("Run this command InGame!");
+            $sender->sendMessage($this->plugin->prefix . "请在游戏中使用此命令!");
         }
         return false;
     }
@@ -63,7 +63,7 @@ class SkinCommand extends Command {
                 case 1:
                     $player->setSkin(new Skin("Standard_Custom", $this->plugin->skins[$player->getName()]));
                     $player->sendSkin();
-                    $player->sendMessage($this->plugin->cfg->getNested("messages.skin-reset"));
+                    $player->sendMessage($this->plugin->prefix . $this->plugin->cfg->getNested("messages.skin-reset"));
             }
         });
         $form->setTitle($this->plugin->cfg->getNested("messages.forms.main-form.title"));
@@ -82,11 +82,9 @@ class SkinCommand extends Command {
             if(file_exists($this->plugin->getDataFolder() . $data . ".png")) {
                 $player->setSkin(new Skin("Standard_Custom", $this->plugin->createSkin($skin)));
                 $player->sendSkin();
-                $msg = $this->plugin->cfg->getNested("messages.skin-success");
-                $msg = str_replace("{name}", $skin, $msg);
-                $player->sendMessage($msg);
+                $player->sendMessage($this->plugin->prefix . str_replace("{name}", $skin, $this->plugin->cfg->getNested("messages.skin-success")));
             } else {
-                $player->sendMessage($this->plugin->cfg->getNested("messages.skin-not-exist"));
+                $player->sendMessage($this->plugin->prefix . $this->plugin->cfg->getNested("messages.skin-not-exist"));
             }
         });
         $form->setTitle($this->plugin->cfg->getNested("messages.forms.skin-list-form.title"));
