@@ -2,6 +2,8 @@
 
 Change your skin according to your choice. Note the configurations for now.
 
+中文版介绍请访问：[MineBBS](https://www.minebbs.com/resources/slashskin.654/)
+
 # Commands
 Command | Alias | Permission | Default
 ------- | ----- | ---------- | --------
